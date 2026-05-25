@@ -1,8 +1,11 @@
+import { useNavigate, Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { useState } from 'react'
 import axios from 'axios'
 
 export default function Login() {
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -10,8 +13,6 @@ export default function Login() {
   })
 
   const [message, setMessage] = useState('')
-
-  const [user, setUser] = useState(null)
 
   const handleChange = (e) => {
 
@@ -32,13 +33,21 @@ export default function Login() {
         formData
       )
 
+      localStorage.setItem(
+        'token',
+        response.data.token
+      )
+
+      localStorage.setItem(
+        'name',
+        response.data.user.name
+      )
+
       setMessage(response.data.message)
 
-      setUser(response.data.user)
+      navigate('/')
 
     } catch (error) {
-
-      console.log(error)
 
       setMessage(
         error.response?.data?.message ||
@@ -49,17 +58,24 @@ export default function Login() {
 
   return (
 
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-cyan-100">
 
       <Navbar />
 
-      <div className="container">
+      <div className="flex justify-center items-center mt-20">
 
-        <div className="card">
+        <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-10 w-[450px] border border-blue-100">
 
-          <h2>Login</h2>
+          <h2 className="text-4xl font-bold text-center text-blue-700 mb-8">
 
-          <form onSubmit={handleLogin}>
+            Login
+
+          </h2>
+
+          <form
+            onSubmit={handleLogin}
+            className="flex flex-col gap-5"
+          >
 
             <input
               type="email"
@@ -67,6 +83,7 @@ export default function Login() {
               placeholder="Enter Email"
               value={formData.email}
               onChange={handleChange}
+              className="p-4 rounded-2xl border border-blue-200 bg-blue-50 text-lg outline-none focus:ring-4 focus:ring-cyan-200"
             />
 
             <input
@@ -75,43 +92,48 @@ export default function Login() {
               placeholder="Enter Password"
               value={formData.password}
               onChange={handleChange}
+              className="p-4 rounded-2xl border border-blue-200 bg-blue-50 text-lg outline-none focus:ring-4 focus:ring-cyan-200"
             />
 
-            <button type="submit">
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-105 transition transform duration-300 text-white py-4 rounded-2xl text-xl font-semibold shadow-lg"
+            >
+
               Login
+
             </button>
 
           </form>
 
           {
             message && (
-              <p>{message}</p>
+
+              <p className="text-center mt-5 text-red-500 font-semibold">
+
+                {message}
+
+              </p>
             )
           }
 
-          {
-            user && (
-              <div>
+          <p className="text-center mt-6 text-gray-600">
 
-                <h3>User Details</h3>
+            Don’t have an account?
 
-                <p>
-                  <strong>Name:</strong> {user.name}
-                </p>
+            <Link
+              to="/signup"
+              className="text-blue-600 font-bold ml-2"
+            >
+              Signup
+            </Link>
 
-                <p>
-                  <strong>Email:</strong> {user.email}
-                </p>
-
-              </div>
-            )
-          }
+          </p>
 
         </div>
 
       </div>
 
-    </>
-
+    </div>
   )
 }

@@ -95,9 +95,14 @@ def login():
         return jsonify({
             "message": "Invalid password"
         }), 401
-
+    
+    access_token = create_access_token(
+    identity=user.email
+    )
+    
     return jsonify({
         "message": "Login successful",
+         "token": access_token,
         "user": {
             "id": user.id,
             "name": user.name,
@@ -135,7 +140,7 @@ def upload_report():
     "message": "File uploaded successfully",
     "filename": file.filename,
     "extracted_text": extracted_text,
-    "ai_analysis": ai_analysis
+    "analysis": ai_analysis
 }), 200
     
 if __name__ == "__main__":

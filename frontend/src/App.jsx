@@ -1,3 +1,4 @@
+import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
@@ -7,18 +8,36 @@ import Signup from './pages/Signup'
 export default function App() {
 
   return (
-    <BrowserRouter>
 
-      <Routes>
+    <div className="bg-gradient-to-br from-blue-100 to-cyan-100 min-h-screen">
 
-        <Route path='/' element={<Home />} />
+      <BrowserRouter>
 
-        <Route path='/login' element={<Login />} />
+        <Routes>
 
-        <Route path='/signup' element={<Signup />} />
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
 
-      </Routes>
+          <Route
+            path='/login'
+            element={<Login />}
+          />
 
-    </BrowserRouter>
+          <Route
+            path='/signup'
+            element={<Signup />}
+          />
+
+        </Routes>
+
+      </BrowserRouter>
+
+    </div>
   )
 }

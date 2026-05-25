@@ -1,18 +1,30 @@
+import { useState } from 'react'
+
 import Navbar from '../components/Navbar'
 import UploadForm from '../components/UploadForm'
+import AnalysisCard from '../components/AnalysisCard'
 
 export default function Home() {
 
+  const [extractedText, setExtractedText] = useState('')
+
+  const [analysis, setAnalysis] = useState('')
+
   return (
+
     <div>
 
       <Navbar />
 
-      <div className="container">
+      <UploadForm
+        setExtractedText={setExtractedText}
+        setAnalysis={setAnalysis}
+      />
 
-        <UploadForm />
-
-      </div>
+      <AnalysisCard
+        extractedText={extractedText}
+        analysis={analysis}
+      />
 
     </div>
   )

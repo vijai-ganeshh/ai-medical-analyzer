@@ -14,20 +14,40 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 def analyze_medical_report(report_text):
 
     prompt = f"""
-    You are a medical AI assistant.
+You are a professional AI medical assistant.
 
-    Analyze this medical report and explain:
-    
-    1. Abnormal values
-    2. Possible health risks
-    3. Simple health suggestions
+Analyze this medical report.
 
-    Keep explanation beginner friendly.
+Give response STRICTLY in this format:
 
-    Medical Report:
-    
-    {report_text}
-    """
+# Patient Summary
+
+Brief summary.
+
+# Abnormal Values
+
+For every abnormal value give:
+
+- Test Name
+- Actual Value
+- Normal Range
+- Severity (High / Moderate / Low)
+- Simple explanation
+
+# Recommendations
+
+Give:
+- diet suggestions
+- exercise suggestions
+- lifestyle improvements
+
+# Precautions
+#Add right emojis 
+Mention health precautions.
+
+Medical Report:
+{report_text}
+"""
 
     response = model.generate_content(prompt)
 
