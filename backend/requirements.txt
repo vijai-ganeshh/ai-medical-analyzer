@@ -4,13 +4,7 @@ Flask-SQLAlchemy
 Flask-JWT-Extended
 bcrypt
 google-generativeai
-PyPDF2
 python-dotenv
 gunicorn
 PyMuPDF
-easyocr
-torch
-torchvision
-numpy
-Pillow
-opencv-python-headless
+PyPDF2
